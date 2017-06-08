@@ -42,9 +42,10 @@ def character_tagging(word_list, output_file):
 
 def character_tagging_2(word_list, input_file, output_file):
     """
-    输入分词后的 词语列表 保
-    :param word_list:
-    :param output_file:
+
+    :param word_list: 标注词
+    :param input_file: 识别结果文件
+    :param output_file: 合并结果
     :return:
     """
     input_data = codecs.open(input_file, 'r', 'utf-8')
@@ -55,7 +56,6 @@ def character_tagging_2(word_list, input_file, output_file):
         if not word.strip():
             continue
         if len(word) == 1:
-
             output_data.write(line + '\t' + word + "\tS\n")
             line = input_data.readline().strip()
         else:
@@ -79,10 +79,10 @@ def character_split(input_data, output_file):
     :param output_file:
     :return:
     """
+    input_data = ''.join(input_data.split())
     output_data = codecs.open(output_file, 'w', 'utf-8')
-    for word in input_data.strip():
-        if word.strip():
-            output_data.write(word + "\tB\n")
+    for word in input_data:
+        output_data.write(word + "\tB\n")
     output_data.close()
 
 
@@ -163,30 +163,7 @@ def create_crf_test_data(root_folder_path, write_folder_path):
 
 
 if __name__ == '__main__':
-    '''
-    crf_learn -f 3 -c 4.0 template CRF_train.txt crf_model
-    crf_test -m crf_model CRF_test.txt > test_result.txt
-    '''
 
     # 创建CRF训练集
-    create_crf_train_data('/Users/Har/PycharmProjects/corpus/train', 'data/2_train')
-    # create_crf_train_data('data/test_corpus', 'data/0_train')
-
-    # 创建CRF测试集
-    create_crf_test_data('/Users/Har/PycharmProjects/corpus/test', 'data/2_train/crf_test')
-
-    # crf_test result
-    # t = character_2_word('data/1_train_100/test_result.txt', 'data/test_result_2.txt')
-    # print '\n'.join(t)
-    # print set(t).__len__()
-    #
-    # cw = CutWord()
-    # content = read_file('data/test_corpus/000150__2010_n.txt')
-    # words = cw.mm_cut(content, 15)
-    # print('\n'.join(cw.terms))
-    # print set(cw.terms).__len__()
-    #
-    # terms = set(load_file('data/train_terms.txt'))
-    # print terms.__len__()
-    # d = set(t) - terms
-    # print '\n'.join(d)
+    # create_crf_train_data('/Users/Har/PycharmProjects/corpus/train', 'data/2_train')
+    create_crf_train_data('data/test_corpus', 'data/0_train')

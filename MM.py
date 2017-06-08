@@ -78,7 +78,7 @@ class CutWord:
         :param max_len: int 最大词长 默认为6
         :return: str-list 已分词的字符串列表
         """
-        sentence = sentence
+        sentence = ''.join(sentence.split())
         cur = 0  # 表示分词的位置
         sen_len = sentence.__len__()  # 句子的长度
         word_list = []  # 划分的结果

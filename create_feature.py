@@ -2,19 +2,17 @@
 import sre_constants
 
 import numpy as np
-import nltk.collocations
+import nltk
 import codecs
-import re
 
 def mutual_information(text):
     """
-    计算每个字(词)相邻右边的互信息
-    :return:
+    计算每个字相邻与相邻右边字的互信息值
+    将所有的互信息值进行排序 划分为5个等级. 互信息值最大为1 最小为5
+    :return: 已离散化后的互信息值
     """
     text = "".join(text.split())
     text += "."
-    # text = re.sub(u"[^\w\s]", u"", text)
-    # text = re.sub(u"[()]", u"", text)
     count = np.zeros(len(text))
     cnt = np.zeros(len(text))
     fq = nltk.FreqDist(text)
@@ -44,6 +42,7 @@ def mutual_information(text):
             result.append(5)
     for i, j in zip(result, text[:-1]):
         print i, j
+    return result
 
 
 
