@@ -21,11 +21,11 @@
 # 　　　　　　┃┫┫　┃┫┫
 # 　　　　　　┗┻┛　┗┻┛+ + + +
 """
-Author = Eric Chan
-Create_Time = 2016/10/07
-中文分词,使用算法为
+author = Eric Chan
+create_Time = 2016/10/07
+
+提供词库对指定字符串进行分词
 正向最大匹配法(Maximum Matching Method, 简称MM算法)
-逆向最大匹配算法(Reverse Maximum Matching Method, 简称RMM算法)
 """
 
 
@@ -55,13 +55,13 @@ def load_file(file_name, charset='utf-8', split_tag='\n'):
             line_list.append(l.strip())
     return line_list
 
+
 def write_file(path, line_list, charset='utf-8'):
     line_list = list(line_list)
     f = open(path, 'w')
     for line in line_list:
-        f.write(line.encode(charset)+'\n')
+        f.write(line.encode(charset) + '\n')
     f.close()
-
 
 
 class CutWord:
@@ -128,4 +128,3 @@ if __name__ == '__main__':
     print '|'.join(r)[:880]
     print '\n'.join(CW.terms)
     print CW.terms.__len__()
-
