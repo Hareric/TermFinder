@@ -12,7 +12,7 @@ create_train_data.py 中已创建的训练集 添加新的特征
 import numpy as np
 import nltk
 import codecs
-from create_train_data import create_crf_train_data_split, get_path
+from create_train_data import  get_path
 
 
 def load_crf_train_data(path):
@@ -32,7 +32,8 @@ def append_feature(path, feature_array):
     origin_data = codecs.open(path, 'r', 'utf-8').readlines()
     new_data = codecs.open(path, 'w', 'utf-8')
     for i in range(len(feature_array)):
-        new_data.write(origin_data[i].strip() + '\t' + str(feature_array[i]) + '\n')
+        t = origin_data[i].split()
+        new_data.write('\t'.join(t[:-1]) + '\t' + str(feature_array[i]) + '\t' + t[-1] + '\n')
     new_data.close()
 
 def merge_feature(path_1, path_2):
@@ -46,7 +47,8 @@ def merge_feature(path_1, path_2):
     path_2_data = codecs.open(path_2, 'r', 'utf-8').readlines()
     new_data = codecs.open(path_1, 'w', 'utf-8')
     for i in range(len(path_1_data)):
-        new_data.write(path_1_data[i].strip() + '\t' + path_2_data[i].split()[-1] + '\n')
+        t = path_1_data[i].split()
+        new_data.write('\t'.join(t[:-1]) + '\t' + path_2_data[i].split()[-1] + '\t' + t[-1] + '\n')
     new_data.close()
 
 
@@ -190,7 +192,7 @@ def entropy(text):
     return result
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # 创建CRF_train训练集
     # create_crf_train_data_split('/Users/Har/PycharmProjects/corpus/train', 'data/3_train')
     # create_crf_train_data_split('/Users/Har/PycharmProjects/corpus/未命名文件夹','/Users/Har/PycharmProjects/corpus/未命名文件夹')
@@ -239,20 +241,20 @@ if __name__ == '__main__':
     #     merge_feature(path, '/Users/Har/PycharmProjects/term_model/3_train_mi/'+path.split('/')[-1])
 
     # merge rel en
-    path_list = get_path('/Users/Har/PycharmProjects/term_model/3_train_rel_en')
-    s = path_list.__len__()
-    c = 1
-    for path in path_list:
-        print s - c, path
-        c += 1
-        merge_feature(path, '/Users/Har/PycharmProjects/term_model/3_train_en/'+path.split('/')[-1])
+    # path_list = get_path('/Users/Har/PycharmProjects/term_model/3_train_rel_en')
+    # s = path_list.__len__()
+    # c = 1
+    # for path in path_list:
+    #     print s - c, path
+    #     c += 1
+    #     merge_feature(path, '/Users/Har/PycharmProjects/term_model/3_train_en/'+path.split('/')[-1])
 
     # merge rel mi
-    path_list = get_path('/Users/Har/PycharmProjects/term_model/3_train_rel_mi')
-    s = path_list.__len__()
-    c = 1
-    for path in path_list:
-        print s - c, path
-        c += 1
-        merge_feature(path, '/Users/Har/PycharmProjects/term_model/3_train_mi/'+path.split('/')[-1])
+    # path_list = get_path('/Users/Har/PycharmProjects/term_model/3_train_rel_mi')
+    # s = path_list.__len__()
+    # c = 1
+    # for path in path_list:
+    #     print s - c, path
+    #     c += 1
+    #     merge_feature(path, '/Users/Har/PycharmProjects/term_model/3_train_mi/'+path.split('/')[-1])
 
