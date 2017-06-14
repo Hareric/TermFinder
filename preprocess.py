@@ -1,10 +1,7 @@
 # coding=utf-8
 """
 Author = Eric Chan
-Create_Time = 2016/10/07
-
-提供词库对指定字符串进行分词
-正向最大匹配法(Maximum Matching Method, 简称MM算法)
+Create_Time = 2017/6/1
 """
 import os
 

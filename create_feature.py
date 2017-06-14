@@ -1,7 +1,7 @@
 # coding=utf-8
 """
 author = Eric Chan
-create_time = 2016/10/07
+create_time = 2017/6/07
 
 create_train_data.py 中已创建的训练集 添加新的特征
 

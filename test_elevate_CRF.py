@@ -2,7 +2,7 @@
 """
 create_time = 2016/6/6
 author = Eric_Chan
-用来训练crf模型及预测
+用来训练crf模型及预测和评价模型
 需要正确安装crf++开源包
 """
 import xlwt
@@ -22,6 +22,8 @@ class CRFs:
         self.cw = MM.CutWord(term_file_path)
         self.terms = set(MM.load_file(term_file_path))
         self.train_terms = set(MM.load_file(train_term_file_path))
+        print "词典中术语个数为:", self.terms.__len__()
+        print "参与训练的术语个数为:", self.train_terms.__len__()
 
     @staticmethod
     def train_CRFs(template_path, crf_train_path, model_path):
@@ -47,6 +49,7 @@ class CRFs:
         temp_path_crf_result = 'data/cache/crf_test_result.txt'
         character_split(content, temp_path_crf)
         if feature_list is not None:
+            feature_list.sort(reverse=True)
             for f in feature_list:
                 if f == 'rel':  # 计算相关度
                     rel_array = relevance(content)
@@ -154,7 +157,7 @@ class CRFs:
         # print '\n'.join(set(new_term_unknown))
         recall = correct_num * 1.0 / term_num
         precise = correct_num * 1.0 / id_term_num
-        print "对新术语忽略不计: 召回率", recall, '精度:' , precise
+        print "对新术语忽略不计: 召回率", recall, '精度:', precise
         print term_num, id_term_num, correct_num
         return list(set(new_term_sub + new_term_unknown))
 
@@ -177,44 +180,65 @@ def write_xls(path, terms_dict):
     file_0.save(path)
 
 
-# if __name__ == '__main__':
-#     d = {'132':['1','2','3'],'1322':['1','2','3'],'3132':['1','2','3']}
-#     write_xls('data/ttt.xls', d)
+
 
 
 if __name__ == '__main__':
-    # 训练crfs模型
+    '''训练crfs模型'''
     # CRFs.train_CRFs('data/template.txt', 'data/0_train/CRF_train.txt', 'data/0_train/model')
 
-    # 对测试集进行术语识别
+    '''对测试集进行术语识别'''
+    # crfs = CRFs(term_file_path='data/terms.txt',
+    #             train_term_file_path='/Users/Har/PycharmProjects/term_model/model/terms_train.txt')
+    #
+    # def run(feature_list=None):  # None   _en   _mi   _mi_en   _rel   _rel_en   _rel_mi   rel_mi_en
+    #     if feature_list is None:
+    #         fea = ''
+    #     else:
+    #         fea = '_'+'_'.join(feature_list)
+    #     print fea
+    #     print feature_list
+    #     path_list = get_path('/Users/Har/PycharmProjects/term_model/corpus/test')
+    #     new_terms_dict = {}
+    #     for i, path in enumerate(path_list):
+    #         print i, path
+    #         title = path.split('/')[-1]
+    #         result_path = '/Users/Har/PycharmProjects/term_model/corpus/test_result' + fea + '/' + title
+    #         crfs.test_CRFs('data/model/model' + fea,
+    #                        path,
+    #                        result_path,
+    #                        feature_list=feature_list)
+    #         # evaluate
+    #         new_terms_dict[title] = crfs.elevate_result(result_path)
+    #
+    #     # 保存新术语
+    #     write_xls('data/new_terms/feature' + fea + '.xls', new_terms_dict)
+    #
+    # run()
+    # run('_rel')  # 添加相关度作为特征
+    # run('_mi')  # 添加互信息作为特征
+    # run('_en')  # 添加信息熵作为特征
+    # run('_mi_en')
+    # run('_rel_en')
+    # run('_rel_mi')
+    # run('_rel_mi_en')
+
+    '示例代码'
+    # 实例化CRFs, 读入术语词库 和 训练集中出现的已登录术语
     crfs = CRFs(term_file_path='data/terms.txt',
-                train_term_file_path='/Users/Har/PycharmProjects/term_model/model/terms_train.txt')
+                train_term_file_path='data/model/terms_train.txt')
 
-    def run(fea=''):  # None   _en   _mi   _mi_en   _rel   _rel_en   _rel_mi   rel_mi_en
-        feature_list = fea.split('_')[1:]
-        print feature_list
-        path_list = get_path('/Users/Har/PycharmProjects/term_model/corpus/test')
-        new_terms_dict = {}
-        for i, path in enumerate(path_list):
-            print i, path
-            title = path.split('/')[-1]
-            result_path = '/Users/Har/PycharmProjects/term_model/corpus/test_result' + fea + '/' + title
-            crfs.test_CRFs('/Users/Har/PycharmProjects/term_model/model/model' + fea,
-                           path,
-                           result_path,
-                           feature_list=feature_list)
-            # evaluate
-            new_terms_dict[title] = crfs.elevate_result(result_path)
+    test_path = 'data/test/600851_2010.txt'  # 测试文本的路径
+    result_path = 'data/test/600851_2010_result.txt'  # 识别结果存放的路径
+    feature_list = ['rel', 'mi', 'en']  # 使用的特征组合
+    model_path = 'data/model/model_rel_mi_en'  # 模型的路径
 
-        # 保存新术语
-        write_xls('data/new_terms/feature' + fea + '.xls', new_terms_dict)
+    crfs.test_CRFs(model_path=model_path,  # 使用的模型的路径
+                   test_file_path=test_path,
+                   test_result_path=result_path,
+                   feature_list=feature_list)
+    # evaluate
+    new_terms_dict = {'title': crfs.elevate_result(result_path)}
 
-    run()
-    run('_rel')  # 添加相关度作为特征
-    run('_mi')  # 添加互信息作为特征
-    run('_en')  # 添加信息熵作为特征
-    run('_mi_en')
-    run('_rel_en')
-    run('_rel_mi')
-    run('_rel_mi_en')
-
+    # 保存新术语
+    write_xls('data/test/new_terms.xls', new_terms_dict)
