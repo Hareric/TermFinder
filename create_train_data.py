@@ -196,4 +196,4 @@ if __name__ == '__main__':
 
     # 创建CRF训练集
     # create_crf_train_data('/Users/Har/PycharmProjects/corpus/train', 'data/2_train')
-    create_crf_train_data('data/test_corpus', 'data/0_train')
+    create_crf_train_data('../term_model/1212', '../term_model/1212')

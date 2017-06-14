@@ -190,8 +190,7 @@ if __name__ == '__main__':
     crfs = CRFs(term_file_path='data/terms.txt',
                 train_term_file_path='/Users/Har/PycharmProjects/term_model/model/terms_train.txt')
 
-    fea = '_rel_mi_en'  # None   _en   _mi   _mi_en   _rel   _rel_en   _rel_mi   rel_mi_en
-    def run(fea=''):
+    def run(fea=''):  # None   _en   _mi   _mi_en   _rel   _rel_en   _rel_mi   rel_mi_en
         feature_list = fea.split('_')[1:]
         print feature_list
         path_list = get_path('/Users/Har/PycharmProjects/term_model/corpus/test')
@@ -208,12 +207,12 @@ if __name__ == '__main__':
             new_terms_dict[title] = crfs.elevate_result(result_path)
 
         # 保存新术语
-        write_xls('data/new_terms/' + fea + '.xls', new_terms_dict)
+        write_xls('data/new_terms/feature' + fea + '.xls', new_terms_dict)
 
-    # run()
-    # run('_rel')
-    run('_mi')
-    run('_en')
+    run()
+    run('_rel')  # 添加相关度作为特征
+    run('_mi')  # 添加互信息作为特征
+    run('_en')  # 添加信息熵作为特征
     run('_mi_en')
     run('_rel_en')
     run('_rel_mi')
