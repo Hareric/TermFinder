@@ -57,10 +57,12 @@ write_xls('data/test/new_terms.xls', new_terms_dict)
 ![new terms][1]
 
 ## 下载
-训练集及测试集语料[下载][4]
+训练集及测试集语料（分卷zip）[下载][4][下载][5][下载][6]
 
 
   [1]: https://raw.githubusercontent.com/Hareric/tuchuang/master/graph/new_terms_xls.png
   [2]: https://raw.githubusercontent.com/Hareric/tuchuang/master/graph/test_txt.png
   [3]: https://raw.githubusercontent.com/Hareric/tuchuang/master/graph/test_result.png
-  [4]: https://raw.githubusercontent.com/Hareric/tuchuang/master/document/%E9%87%91%E8%9E%8D%E8%AF%AD%E6%96%99%E9%9B%86.zip
+  [4]: https://raw.githubusercontent.com/Hareric/tuchuang/master/document/Finance_data.zip
+  [5]: https://raw.githubusercontent.com/Hareric/tuchuang/master/document/Finance_data.z01
+  [6]: https://raw.githubusercontent.com/Hareric/tuchuang/master/document/Finance_data.z02
