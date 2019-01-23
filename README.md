@@ -57,7 +57,7 @@ write_xls('data/test/new_terms.xls', new_terms_dict)
 ![new terms][1]
 
 ## 下载
-训练集及测试集语料（分卷zip）[下载][4][下载][5][下载][6]
+训练集及测试集语料（分卷zip）[下载1][4][下载2][5][下载3][6]
 
 
   [1]: https://raw.githubusercontent.com/Hareric/tuchuang/master/graph/new_terms_xls.png
